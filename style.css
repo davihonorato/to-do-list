@@ -60,6 +60,7 @@ section .input-field button {
     margin-left: 5px;
     outline: none;
     color: #fff;
+    font-size: 20px;
     background-color: #7b68ee;
     cursor: pointer;
     border: none;
