@@ -66,6 +66,13 @@ section .input-field button {
     border: none;
     border-radius: 3px;
     box-sizing: border-box;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+section .input-field button.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* Lista de Atividades */
