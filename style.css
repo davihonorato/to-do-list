@@ -118,4 +118,11 @@ section .footer button {
     border: none;
     border-radius: 3px;
     box-sizing: border-box;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+section .footer button.active {
+    opacity: 1;
+    pointer-events: auto;
 }

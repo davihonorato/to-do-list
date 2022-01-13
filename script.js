@@ -1,5 +1,6 @@
 const inputField = document.querySelector(".input-field input");
 const inputButton = document.querySelector(".input-field button");
+const clearAllButton = document.querySelector(".footer button");
 
 showTasks();
 
@@ -45,7 +46,15 @@ function showTasks() {
         </div>`;
     });
     
+    // exibindo atividades pendentes
     document.querySelector(".pendingNumber").textContent = listArray.length;
+    if (listArray.length > 0) {
+        clearAllButton.classList.add("active");
+    }else {
+        clearAllButton.classList.remove("active");
+    }
+
+    // exibindo atividades e limpando o campo de entrada
     document.querySelector(".tasks").innerHTML = NewLiTag;
     inputField.value = "";
 }
@@ -56,6 +65,15 @@ function deleteTask(index) {
     listArray = JSON.parse(getLocalStorage);
 
     listArray.splice(index, 1);
+    getLocalStorage = localStorage.setItem("Tasks", JSON.stringify(listArray));
+    showTasks();
+}
+
+// Função utilizada para deletar todos os dados na tag ul
+clearAllButton.onclick = () =>{
+    let getLocalStorage = localStorage.getItem("Tasks");
+    listArray = [];
+
     getLocalStorage = localStorage.setItem("Tasks", JSON.stringify(listArray));
     showTasks();
 }
