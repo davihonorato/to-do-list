@@ -45,6 +45,7 @@ function showTasks() {
         </div>`;
     });
     document.querySelector(".tasks").innerHTML = NewLiTag;
+    inputField.value = "";
 }
 
 // Função utilizada para deletar dados na tag ul

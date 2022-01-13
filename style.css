@@ -26,7 +26,6 @@ section {
 }
 
 /* Cabeçalho */
-
 section header {
     text-align: center;
     font-size: 20px;
@@ -34,7 +33,6 @@ section header {
 }
 
 /* Campo para inserir as atividades */
-
 section .input-field {
     display: flex;
     width: 100%;
@@ -76,7 +74,6 @@ section .input-field button.active {
 }
 
 /* Lista de Atividades */
-
 section .tasks {
     width: 100%;
     max-height: 250px;
@@ -95,10 +92,6 @@ section .tasks .input-taskbox input {
     position: relative;
     left: 20px;
     top: 15px;
-}
-
-section .tasks .input-taskbox input:hover {
-    cursor: pointer;
 }
 
 section .tasks .input-taskbox label{
