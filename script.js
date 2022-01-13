@@ -1,6 +1,9 @@
 const inputField = document.querySelector(".input-field input");
 const inputButton = document.querySelector(".input-field button");
 
+showTasks();
+
+// ao inserir dados na caixa de entrada (e não for apenas espaços), o botão será habilitar
 inputField.onkeyup = () => {
     let userData = inputField.value;
     if (userData.trim() != 0) {
@@ -10,6 +13,7 @@ inputField.onkeyup = () => {
     }
 }
 
+// Função utilizada para adicionar dados na tag ul
 inputButton.onclick = () => {
     let userData = inputField.value;
     let getLocalStorage = localStorage.getItem("Tasks");
@@ -24,6 +28,7 @@ inputButton.onclick = () => {
     showTasks();
 }
 
+// Função utilizada para exibir os dados inseridos (e armazenados no navegador) do usuário
 function showTasks() {
     let getLocalStorage = localStorage.getItem("Tasks");
     if (getLocalStorage == null) {
@@ -35,9 +40,19 @@ function showTasks() {
     let NewLiTag = "";
     listArray.forEach( (element, index) => {
         NewLiTag += `<div class="input-taskbox">
-        <input type="checkbox" id="t${index + 1}">
-        <label for="t${index + 1}">${element}</label>
+        <input type="checkbox" id="t${index}" onclick="deleteTask(${index})">
+        <label for="t${index}">${element}</label>
         </div>`;
     });
     document.querySelector(".tasks").innerHTML = NewLiTag;
+}
+
+// Função utilizada para deletar dados na tag ul
+function deleteTask(index) {
+    let getLocalStorage = localStorage.getItem("Tasks");
+    listArray = JSON.parse(getLocalStorage);
+
+    listArray.splice(index, 1);
+    getLocalStorage = localStorage.setItem("Tasks", JSON.stringify(listArray));
+    showTasks();
 }

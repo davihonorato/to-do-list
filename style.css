@@ -97,6 +97,10 @@ section .tasks .input-taskbox input {
     top: 15px;
 }
 
+section .tasks .input-taskbox input:hover {
+    cursor: pointer;
+}
+
 section .tasks .input-taskbox label{
     position: relative;
     left: 35px;
