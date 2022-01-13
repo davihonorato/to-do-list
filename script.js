@@ -44,6 +44,8 @@ function showTasks() {
         <label for="t${index}">${element}</label>
         </div>`;
     });
+    
+    document.querySelector(".pendingNumber").textContent = listArray.length;
     document.querySelector(".tasks").innerHTML = NewLiTag;
     inputField.value = "";
 }
