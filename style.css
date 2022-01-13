@@ -79,6 +79,8 @@ section .input-field button.active {
 
 section .tasks {
     width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
 }
 
 section .tasks .input-taskbox {

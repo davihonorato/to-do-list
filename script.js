@@ -21,6 +21,7 @@ inputButton.onclick = () => {
 
     listArray.push(userData);
     getLocalStorage = localStorage.setItem("Tasks", JSON.stringify(listArray));
+    showTasks();
 }
 
 function showTasks() {
@@ -38,5 +39,5 @@ function showTasks() {
         <label for="t${index + 1}">${element}</label>
         </div>`;
     });
-    document.getElementById("tasks").innerHTML = NewLiTag;
+    document.querySelector(".tasks").innerHTML = NewLiTag;
 }
