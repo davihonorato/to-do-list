@@ -9,3 +9,16 @@ inputField.onkeyup = () => {
         inputButton.classList.remove("active");
     }
 }
+
+inputButton.onclick = () => {
+    let userData = inputField.value;
+    let getLocalStorage = localStorage.getItem("Tasks");
+    if (getLocalStorage == null) {
+        listArray = [];
+    } else{
+        listArray = JSON.parse(getLocalStorage); // transformar o JSON em um objeto JS
+    }
+
+    listArray.push(userData);
+    getLocalStorage = localStorage.setItem("Tasks", JSON.stringify(listArray));
+}
