@@ -26,6 +26,7 @@ inputButton.onclick = () => {
 
     listArray.push(userData);
     getLocalStorage = localStorage.setItem("Tasks", JSON.stringify(listArray));
+    inputButton.classList.remove("active"); // desabilitar o botão novamente após inserir uma nova task
     showTasks();
 }
 
