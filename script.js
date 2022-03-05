@@ -48,6 +48,10 @@ function showTasks() {
         </div>
         <div class="settings">
             <i class="fas fa-ellipsis-h"></i>
+            <div class="config">
+                <button><i class="fas fa-pen"></i>Editar</button>
+                <button><i class="fas fa-solid fa-eraser"></i>Deletar</button>
+            </div>
         </div>
         </div>`;
     });

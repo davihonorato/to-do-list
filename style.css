@@ -100,16 +100,49 @@ section .tasks .input-taskbox .task {
 section .tasks .input-taskbox .task input,
 section .tasks .input-taskbox .settings {
     margin: 0px 15px;
-}
-
-section .tasks .input-taskbox .task input:hover,
-section .tasks .input-taskbox .task label:hover,
-section .tasks .input-taskbox .settings:hover {
     cursor: pointer;
 }
 
-/* section .tasks .input-taskbox label{
-} */
+section .tasks .input-taskbox .task label {
+    cursor: pointer;
+}
+
+section .tasks .input-taskbox .settings {
+    position: relative;
+}
+
+section .tasks .input-taskbox .settings .config {
+    z-index: 1111;
+    position: absolute;
+    left: -65px;
+    top: 7px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.5);
+    background-color: #ffffff;
+}
+
+section .tasks .input-taskbox .settings .config button {
+    font-size: 14px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+section .tasks .input-taskbox .settings .config button:hover {
+    opacity: 0.8;
+    color: #ffffff;
+    background-color: #7b68ee;
+}
+
+section .tasks .input-taskbox .settings .config button i {
+    margin-right: 10px;
+}
+
+section .tasks .input-taskbox .settings .config button:first-child i{
+    margin-left: -8px;
+}
 
 /* footer */
 section .footer {
