@@ -83,15 +83,29 @@ section .tasks {
 section .tasks .input-taskbox {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     text-align: justify;
     width: 100%;
     padding: 15px 0px;
     margin-bottom: 10px;
-    background-color: #ebebeb;
+    border-radius: 3px;
+    background-color: #f7f7f7;
 }
 
-section .tasks .input-taskbox input {
-    margin: 0px 12px;
+section .tasks .input-taskbox .task {
+    display: flex;
+    align-items: center;
+}
+
+section .tasks .input-taskbox .task input,
+section .tasks .input-taskbox .settings {
+    margin: 0px 15px;
+}
+
+section .tasks .input-taskbox .task input:hover,
+section .tasks .input-taskbox .task label:hover,
+section .tasks .input-taskbox .settings:hover {
+    cursor: pointer;
 }
 
 /* section .tasks .input-taskbox label{

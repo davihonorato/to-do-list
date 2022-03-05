@@ -42,8 +42,13 @@ function showTasks() {
     let NewLiTag = "";
     listArray.forEach( (element, index) => {
         NewLiTag += `<div class="input-taskbox">
-        <input type="checkbox" id="t${index}" onclick="deleteTask(${index})">
-        <label for="t${index}">${element}</label>
+        <div class="task">
+            <input type="checkbox" id="${index}" onclick="deleteTask(${index})">
+            <label for="${index}">${element}</label>
+        </div>
+        <div class="settings">
+            <i class="fas fa-ellipsis-h"></i>
+        </div>
         </div>`;
     });
     
