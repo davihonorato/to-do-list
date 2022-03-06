@@ -80,6 +80,23 @@ section .tasks {
     overflow-y: auto;
 }
 
+section .tasks::-webkit-scrollbar {
+    width: 10px;
+}
+
+section .tasks::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+section .tasks::-webkit-scrollbar-thumb {
+    background-color: rgb(185, 185, 185);
+    border-radius: 10px;
+}
+
+section .tasks::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(150, 150, 150);
+}
+
 section .tasks .input-taskbox {
     display: flex;
     align-items: center;
