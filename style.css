@@ -97,8 +97,7 @@ section .tasks .input-taskbox .task {
     align-items: center;
 }
 
-section .tasks .input-taskbox .task input,
-section .tasks .input-taskbox .settings {
+section .tasks .input-taskbox .task input {
     margin: 0px 15px;
     cursor: pointer;
 }
@@ -109,39 +108,46 @@ section .tasks .input-taskbox .task label {
 
 section .tasks .input-taskbox .settings {
     position: relative;
+    cursor: pointer;
+    margin: 0px 15px;
 }
 
-section .tasks .input-taskbox .settings .config {
-    z-index: 1111;
+section .tasks .input-taskbox .settings .config-menu {
+    z-index: 11;
     position: absolute;
-    left: -65px;
+    left: -69px;
     top: 7px;
-    display: flex;
-    flex-direction: column;
+    transform: scale(0);
+    transform-origin: top right;
+    transition: transform 0.3s ease;
+    list-style-type: none;
+    border-radius: 3px;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.5);
     background-color: #ffffff;
 }
 
-section .tasks .input-taskbox .settings .config button {
-    font-size: 14px;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    background-color: #ffffff;
+section .tasks .input-taskbox .settings:hover > .config-menu {
+    transform: scale(1);
 }
 
-section .tasks .input-taskbox .settings .config button:hover {
+section .tasks .input-taskbox .settings .config-menu li {
+    display: flex;
+    padding: 10px;
+    font-size: 14px;
+}
+
+section .tasks .input-taskbox .settings .config-menu li:hover {
     opacity: 0.8;
     color: #ffffff;
     background-color: #7b68ee;
 }
 
-section .tasks .input-taskbox .settings .config button i {
-    margin-right: 10px;
+section .tasks .input-taskbox .settings .config-menu li i {
+    margin-right: 5px;
 }
 
-section .tasks .input-taskbox .settings .config button:first-child i{
-    margin-left: -8px;
+section .tasks .input-taskbox .settings .config-menu li:first-child i {
+    font-size: 13px;
 }
 
 /* footer */
