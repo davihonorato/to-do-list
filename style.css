@@ -133,11 +133,15 @@ section .tasks .input-taskbox .task {
     align-items: center;
 }
 
-section .tasks .input-taskbox .task input {
-    margin: 0px 15px;
-    cursor: pointer;
+section .tasks .input-taskbox .task.completed {
+    text-decoration: line-through;
 }
 
+section .tasks .input-taskbox .task input {
+    margin: 0px 15px;
+}
+
+section .tasks .input-taskbox .task input,
 section .tasks .input-taskbox .task label {
     cursor: pointer;
 }

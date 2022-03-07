@@ -5,9 +5,9 @@ const clearAllButton = document.querySelector(".footer button");
 showTasks();
 
 // ao inserir dados na caixa de entrada (e não for apenas espaços), o botão será habilitar
-inputField.onkeyup = () => {
-    let userData = inputField.value;
-    if (userData.trim() != 0) {
+inputField.onkeyup = (e) => {
+    let userData = inputField.value.trim();
+    if (userData != 0) {
         inputButton.classList.add("active");
     }else {
         inputButton.classList.remove("active");
@@ -24,8 +24,9 @@ inputButton.onclick = () => {
         listArray = JSON.parse(getLocalStorage); // transformar o JSON em um objeto JS
     }
 
-    listArray.push(userData);
-    getLocalStorage = localStorage.setItem("Tasks", JSON.stringify(listArray));
+    let taskInfo = {"nameTask": userData, "status": "pending"};
+    listArray.push(taskInfo);
+    localStorage.setItem("Tasks", JSON.stringify(listArray));
     inputButton.classList.remove("active"); // desabilitar o botão novamente após inserir uma nova task
     showTasks();
 }
@@ -39,12 +40,13 @@ function showTasks() {
         listArray = JSON.parse(getLocalStorage);
     }
 
-    let NewLiTag = "";
+    let NewTask = "";
     listArray.forEach( (element, index) => {
-        NewLiTag += `<div class="input-taskbox">
-        <div class="task">
-            <input type="checkbox" id="${index}" onclick="deleteTask(${index})">
-            <label for="${index}">${element}</label>
+        let isCompleted = element.status == "completed" ? "checked" : "";
+        NewTask += `<div class="input-taskbox">
+        <div class="task ${element.status}">
+            <input type="checkbox" id="t${index}" onclick="completeTask(${index})" ${isCompleted}>
+            <label for="t${index}">${element.nameTask}</label>
         </div>
         <div class="settings">
             <i class="fas fa-ellipsis-h"></i>
@@ -56,7 +58,7 @@ function showTasks() {
         </div>`;
     });
     
-    // exibindo atividades pendentes
+    // exibindo texto de atividades pendentes
     document.querySelector(".pendingNumber").textContent = listArray.length;
     if (listArray.length > 0) {
         clearAllButton.classList.add("active");
@@ -65,8 +67,28 @@ function showTasks() {
     }
 
     // exibindo atividades e limpando o campo de entrada
-    document.querySelector(".tasks").innerHTML = NewLiTag;
+    document.querySelector(".tasks").innerHTML = NewTask;
     inputField.value = "";
+}
+
+function completeTask(index){
+    let getLocalStorage = localStorage.getItem("Tasks");
+    listArray = JSON.parse(getLocalStorage);
+
+    let task = document.querySelector(`#t${index}`);
+
+    if (task.checked) {
+        task.parentElement.classList.replace("pending", "completed");
+
+        listArray[index].status = "completed";
+    } else {
+        task.parentElement.classList.replace("completed", "pending");
+
+        listArray[index].status = "pending";
+    }
+
+    localStorage.setItem("Tasks", JSON.stringify(listArray));
+    showTasks();
 }
 
 // Função utilizada para deletar dados na tag ul
@@ -75,15 +97,14 @@ function deleteTask(index) {
     listArray = JSON.parse(getLocalStorage);
 
     listArray.splice(index, 1);
-    getLocalStorage = localStorage.setItem("Tasks", JSON.stringify(listArray));
+    localStorage.setItem("Tasks", JSON.stringify(listArray));
     showTasks();
 }
 
 // Função utilizada para deletar todos os dados na tag ul
 clearAllButton.onclick = () =>{
-    let getLocalStorage = localStorage.getItem("Tasks");
     listArray = [];
 
-    getLocalStorage = localStorage.setItem("Tasks", JSON.stringify(listArray));
+    localStorage.setItem("Tasks", JSON.stringify(listArray));
     showTasks();
 }
