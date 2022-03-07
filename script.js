@@ -12,6 +12,22 @@ inputField.onkeyup = (e) => {
     }else {
         inputButton.classList.remove("active");
     }
+
+    // caso o usuário envie o texto com a tecla "enter"
+    if (e.key == "Enter" && userData != 0) {
+        let getLocalStorage = localStorage.getItem("Tasks");
+        if (getLocalStorage == null) {
+            listArray = [];
+        } else{
+            listArray = JSON.parse(getLocalStorage); // transformar o JSON em um objeto JS
+        }
+
+        let taskInfo = {"nameTask": userData, "status": "pending"};
+        listArray.push(taskInfo);
+        localStorage.setItem("Tasks", JSON.stringify(listArray)); //modifica os valores do armazenamento local
+        inputButton.classList.remove("active"); // desabilitar o botão novamente após inserir uma nova task
+        showTasks();
+    }
 }
 
 // Função utilizada para adicionar dados na tag ul
