@@ -3,9 +3,10 @@ const inputButton = document.querySelector(".input-field button");
 const clearAllButton = document.querySelector(".footer button");
 const filters = document.querySelectorAll(".filters span");
 
+// variável utilizada para armazenar o index da task editada
 let editId;
 
-
+// adiciona um escutador nos filtros
 filters.forEach(option => {
     option.addEventListener("click", () => {
         document.querySelector("span.selected").classList.remove("selected");
@@ -30,6 +31,7 @@ inputField.onkeyup = (e) => {
         let getLocalStorage = localStorage.getItem("Tasks");
         let editing = inputField.classList.contains("editing");
 
+        // caso não esteja sendo editado
         if (!editing) {
             if (getLocalStorage == null) {
                 listArray = [];
@@ -39,6 +41,8 @@ inputField.onkeyup = (e) => {
     
             let taskInfo = {"nameTask": userData, "status": "pending"};
             listArray.push(taskInfo);
+
+        // caso contrário (está editando)
         } else {
             listArray[editId].nameTask = inputField.value;
             inputField.classList.remove("editing");
@@ -86,7 +90,7 @@ function showTasks(filter) {
 
     let NewTask = "";
     listArray.forEach( (element, index) => {
-        let isCompleted = element.status == "completed" ? "checked" : "";
+        let isCompleted = element.status == "completed" ? "checked" : ""; // verifica os status da task e armazena o valor que modificará o checkbox
         
         if (filter == "all" || filter == element.status){
             NewTask += `<div class="input-taskbox">
@@ -118,6 +122,7 @@ function showTasks(filter) {
     inputField.value = "";
 }
 
+// Função utilizada para inserir/modificar a mensagem inferior do to-do list
 function bottomMessage(filter, listArray) {
     let message;
 
@@ -163,6 +168,7 @@ function editTask(taskIndex) {
     inputField.classList.add("editing");
     inputButton.classList.add("active");
 
+    // inserindo o valor da task editada em "editId"
     editId = taskIndex;
 }
 
