@@ -105,8 +105,8 @@ function showTasks(filter) {
         }
     });
     
-    // exibindo texto de atividades pendentes
-    document.querySelector(".pendingNumber").textContent = listArray.length;
+    // exibindo texto de atividades
+    document.querySelector(".info-text").textContent = bottomMessage(filter, listArray);
     if (listArray.length > 0) {
         clearAllButton.classList.add("active");
     }else {
@@ -116,6 +116,21 @@ function showTasks(filter) {
     // exibindo atividades e limpando o campo de entrada
     document.querySelector(".tasks").innerHTML = NewTask;
     inputField.value = "";
+}
+
+function bottomMessage(filter, listArray) {
+    let message;
+
+    if (filter != "all") {
+        let filterElements = listArray.filter(element => element.status == filter);
+        let filterStatus = filter == "pending" ? "pendente(s)" : "finalizada(s)";
+
+        message = `Você tem ${filterElements.length} atividade(s) ${filterStatus}`;
+    } else {
+        message = `Você tem ${listArray.length} atividade(s)`;
+    }
+
+    return message;
 }
 
 // Função utilizada para alterar o status de uma task para "completo"
@@ -136,7 +151,6 @@ function completeTask(taskIndex, filter){
     }
 
     localStorage.setItem("Tasks", JSON.stringify(listArray));
-    showTasks(filter);
 }
 
 // Função utilizada para editar os dados da lista
@@ -145,7 +159,10 @@ function editTask(taskIndex) {
     listArray = JSON.parse(getLocalStorage);
 
     inputField.value = listArray[taskIndex].nameTask;
+    inputField.focus();
     inputField.classList.add("editing");
+    inputButton.classList.add("active");
+
     editId = taskIndex;
 }
 
