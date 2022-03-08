@@ -1,10 +1,20 @@
 const inputField = document.querySelector(".input-field input");
 const inputButton = document.querySelector(".input-field button");
 const clearAllButton = document.querySelector(".footer button");
+const filters = document.querySelectorAll(".filters span");
 
 let editId;
 
-showTasks();
+
+filters.forEach(option => {
+    option.addEventListener("click", () => {
+        document.querySelector("span.selected").classList.remove("selected");
+        option.classList.add("selected");
+        showTasks(option.id);
+    });
+});
+
+showTasks("all");
 
 // ao inserir dados na caixa de entrada (e não for apenas espaços), o botão será habilitar
 inputField.onkeyup = (e) => {
@@ -36,7 +46,7 @@ inputField.onkeyup = (e) => {
 
         localStorage.setItem("Tasks", JSON.stringify(listArray)); //modifica os valores do armazenamento local
         inputButton.classList.remove("active"); // desabilitar o botão novamente após inserir uma nova task
-        showTasks();
+        showTasks("all");
     }
 }
 
@@ -62,11 +72,11 @@ inputButton.onclick = () => {
 
     localStorage.setItem("Tasks", JSON.stringify(listArray));
     inputButton.classList.remove("active"); // desabilitar o botão novamente após inserir uma nova task
-    showTasks();
+    showTasks("all");
 }
 
 // Função utilizada para exibir os dados inseridos (e armazenados no navegador) do usuário
-function showTasks() {
+function showTasks(filter) {
     let getLocalStorage = localStorage.getItem("Tasks");
     if (getLocalStorage == null) {
         listArray = [];
@@ -77,19 +87,22 @@ function showTasks() {
     let NewTask = "";
     listArray.forEach( (element, index) => {
         let isCompleted = element.status == "completed" ? "checked" : "";
-        NewTask += `<div class="input-taskbox">
-        <div class="task ${element.status}">
-            <input type="checkbox" id="t${index}" onclick="completeTask(${index})" ${isCompleted}>
-            <label for="t${index}">${element.nameTask}</label>
-        </div>
-        <div class="settings">
-            <i class="fas fa-ellipsis-h"></i>
-            <ul class="config-menu">
-                <li onclick="editTask(${index})"><i class="fas fa-pen"></i>Editar</li>
-                <li onclick="deleteTask(${index})"><i class="fas fa-solid fa-eraser"></i>Deletar</li>
-            </ul>
-        </div>
-        </div>`;
+        
+        if (filter == "all" || filter == element.status){
+            NewTask += `<div class="input-taskbox">
+            <div class="task ${element.status}">
+                <input type="checkbox" id="t${index}" onclick="completeTask(${index}, ${filter})" ${isCompleted}>
+                <label for="t${index}">${element.nameTask}</label>
+            </div>
+            <div class="settings">
+                <i class="fas fa-ellipsis-h"></i>
+                <ul class="config-menu">
+                    <li onclick="editTask(${index})"><i class="fas fa-pen"></i>Editar</li>
+                    <li onclick="deleteTask(${index}, ${filter})"><i class="fas fa-solid fa-eraser"></i>Deletar</li>
+                </ul>
+            </div>
+            </div>`;
+        }
     });
     
     // exibindo texto de atividades pendentes
@@ -106,24 +119,24 @@ function showTasks() {
 }
 
 // Função utilizada para alterar o status de uma task para "completo"
-function completeTask(index){
+function completeTask(taskIndex, filter){
     let getLocalStorage = localStorage.getItem("Tasks");
     listArray = JSON.parse(getLocalStorage);
 
-    let task = document.querySelector(`#t${index}`);
+    let task = document.querySelector(`#t${taskIndex}`);
 
     if (task.checked) {
         task.parentElement.classList.replace("pending", "completed");
 
-        listArray[index].status = "completed";
+        listArray[taskIndex].status = "completed";
     } else {
         task.parentElement.classList.replace("completed", "pending");
 
-        listArray[index].status = "pending";
+        listArray[taskIndex].status = "pending";
     }
 
     localStorage.setItem("Tasks", JSON.stringify(listArray));
-    showTasks();
+    showTasks(filter);
 }
 
 // Função utilizada para editar os dados da lista
@@ -137,13 +150,13 @@ function editTask(taskIndex) {
 }
 
 // Função utilizada para deletar dados da lista
-function deleteTask(index) {
+function deleteTask(taskIndex, filter) {
     let getLocalStorage = localStorage.getItem("Tasks");
     listArray = JSON.parse(getLocalStorage);
 
-    listArray.splice(index, 1);
+    listArray.splice(taskIndex, 1);
     localStorage.setItem("Tasks", JSON.stringify(listArray));
-    showTasks();
+    showTasks(filter);
 }
 
 // Função utilizada para deletar todos os dados da lista
@@ -151,5 +164,5 @@ clearAllButton.onclick = () =>{
     listArray = [];
 
     localStorage.setItem("Tasks", JSON.stringify(listArray));
-    showTasks();
+    showTasks("all");
 }
