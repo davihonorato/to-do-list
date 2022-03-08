@@ -2,6 +2,8 @@ const inputField = document.querySelector(".input-field input");
 const inputButton = document.querySelector(".input-field button");
 const clearAllButton = document.querySelector(".footer button");
 
+let editId;
+
 showTasks();
 
 // ao inserir dados na caixa de entrada (e não for apenas espaços), o botão será habilitar
@@ -16,14 +18,22 @@ inputField.onkeyup = (e) => {
     // caso o usuário envie o texto com a tecla "enter"
     if (e.key == "Enter" && userData != 0) {
         let getLocalStorage = localStorage.getItem("Tasks");
-        if (getLocalStorage == null) {
-            listArray = [];
-        } else{
-            listArray = JSON.parse(getLocalStorage); // transformar o JSON em um objeto JS
+        let editing = inputField.classList.contains("editing");
+
+        if (!editing) {
+            if (getLocalStorage == null) {
+                listArray = [];
+            } else{
+                listArray = JSON.parse(getLocalStorage); // transformar o JSON em um objeto JS
+            }
+    
+            let taskInfo = {"nameTask": userData, "status": "pending"};
+            listArray.push(taskInfo);
+        } else {
+            listArray[editId].nameTask = inputField.value;
+            inputField.classList.remove("editing");
         }
 
-        let taskInfo = {"nameTask": userData, "status": "pending"};
-        listArray.push(taskInfo);
         localStorage.setItem("Tasks", JSON.stringify(listArray)); //modifica os valores do armazenamento local
         inputButton.classList.remove("active"); // desabilitar o botão novamente após inserir uma nova task
         showTasks();
@@ -34,14 +44,22 @@ inputField.onkeyup = (e) => {
 inputButton.onclick = () => {
     let userData = inputField.value;
     let getLocalStorage = localStorage.getItem("Tasks");
-    if (getLocalStorage == null) {
-        listArray = [];
-    } else{
-        listArray = JSON.parse(getLocalStorage); // transformar o JSON em um objeto JS
+    let editing = inputField.classList.contains("editing");
+
+    if (!editing) {
+        if (getLocalStorage == null) {
+            listArray = [];
+        } else{
+            listArray = JSON.parse(getLocalStorage); // transformar o JSON em um objeto JS
+        }
+    
+        let taskInfo = {"nameTask": userData, "status": "pending"};
+        listArray.push(taskInfo);
+    } else {
+        listArray[editId].nameTask = inputField.value;
+        inputField.classList.remove("editing");
     }
 
-    let taskInfo = {"nameTask": userData, "status": "pending"};
-    listArray.push(taskInfo);
     localStorage.setItem("Tasks", JSON.stringify(listArray));
     inputButton.classList.remove("active"); // desabilitar o botão novamente após inserir uma nova task
     showTasks();
@@ -67,8 +85,8 @@ function showTasks() {
         <div class="settings">
             <i class="fas fa-ellipsis-h"></i>
             <ul class="config-menu">
-                <li><i class="fas fa-pen"></i>Editar</li>
-                <li><i class="fas fa-solid fa-eraser"></i>Deletar</li>
+                <li onclick="editTask(${index})"><i class="fas fa-pen"></i>Editar</li>
+                <li onclick="deleteTask(${index})"><i class="fas fa-solid fa-eraser"></i>Deletar</li>
             </ul>
         </div>
         </div>`;
@@ -87,6 +105,7 @@ function showTasks() {
     inputField.value = "";
 }
 
+// Função utilizada para alterar o status de uma task para "completo"
 function completeTask(index){
     let getLocalStorage = localStorage.getItem("Tasks");
     listArray = JSON.parse(getLocalStorage);
@@ -107,7 +126,17 @@ function completeTask(index){
     showTasks();
 }
 
-// Função utilizada para deletar dados na tag ul
+// Função utilizada para editar os dados da lista
+function editTask(taskIndex) {
+    let getLocalStorage = localStorage.getItem("Tasks");
+    listArray = JSON.parse(getLocalStorage);
+
+    inputField.value = listArray[taskIndex].nameTask;
+    inputField.classList.add("editing");
+    editId = taskIndex;
+}
+
+// Função utilizada para deletar dados da lista
 function deleteTask(index) {
     let getLocalStorage = localStorage.getItem("Tasks");
     listArray = JSON.parse(getLocalStorage);
@@ -117,7 +146,7 @@ function deleteTask(index) {
     showTasks();
 }
 
-// Função utilizada para deletar todos os dados na tag ul
+// Função utilizada para deletar todos os dados da lista
 clearAllButton.onclick = () =>{
     listArray = [];
 

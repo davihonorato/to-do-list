@@ -150,6 +150,7 @@ section .tasks .input-taskbox .settings {
     position: relative;
     cursor: pointer;
     margin: 0px 15px;
+    color: #505050;
 }
 
 section .tasks .input-taskbox .settings .config-menu {
